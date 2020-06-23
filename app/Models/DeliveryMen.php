@@ -19,7 +19,7 @@ class DeliveryMen extends Authenticatable
    * @var array
    */
 
-  protected $fillable = [  'fname', 'lname', 'address', 'city','phone', 'email','password', 'updated_at', 'created_at'];
+  protected $fillable = [  'fname', 'lname', 'address', 'city','phone', 'email','password','latitude','longitide','price_delivery','price_refund','price_cancel','bank','rib','avatar','statut', 'updated_at', 'created_at'];
 
   /**
    * The attributes that should be hidden for arrays.

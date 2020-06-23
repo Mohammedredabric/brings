@@ -21,6 +21,9 @@ class CreateProductsTable extends Migration
           $table->string('paking_type')->nullable();
           $table->string('image');
           $table->string('description',200)->nullable();
+          $table->unsignedBigInteger('customer_id');
+          $table->foreign('customer_id')->references('id')->on('customers');
+          $table->string('address',150);
           $table->timestamps();
         });
     }

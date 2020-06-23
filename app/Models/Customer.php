@@ -18,7 +18,7 @@ class Customer extends Authenticatable
    * @var array
    */
 
-  protected $fillable = [  'fname', 'lname', 'address', 'city','phone', 'email','password', 'updated_at', 'created_at'];
+  protected $fillable = [  'fname', 'lname', 'address', 'city','phone', 'email','password','discount','bank','rib','avatar','statut','type', 'updated_at', 'created_at'];
 
 
   /**
@@ -40,5 +40,16 @@ class Customer extends Authenticatable
   protected $casts = [
     'email_verified_at' => 'datetime',
   ];
+
+  //
+  public function products(){
+
+      return $this -> hasMany(Product::class);
+  }
+
+  public function details(){
+
+    return $this -> hasMany(details::class);
+  }
 
 }
