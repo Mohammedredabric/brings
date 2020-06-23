@@ -1,0 +1,61 @@
+{"menu": [
+  {"url":"/admin", "name":"tableau de bord", "slug":"tableau de bord", "icon":"feather icon-home", "i18n":"tableau de bord"},
+  {"url":"","navheader":"Gestion des Sessions","icon":""},
+  {"url":"#", "name":"Utilisateurs", "i18n":"Utilisateurs" , "icon":"feather icon-users", "slug":"",
+    "submenu":[
+      {"url":"/admin/user/create","name":"Ajouter utilisateur", "i18n":"Ajouter utilisateur" ,"icon":"feather icon-circle","slug":"Ajouter utilisateur"},
+      {"url":"/admin/user","name":"Liste Des Utilisateurs", "i18n":"Liste Des Utilisateurs" ,"icon":"feather icon-circle","slug":"Liste Des Utilisateurs"}
+    ]
+  },
+  {"url":"#", "name":"Clients", "i18n":"Clients" , "icon":"feather icon-users", "slug":"Clients",
+    "submenu":[
+      {"url":"/admin/customer/create","name":"Ajouter Client", "i18n":"Ajouter Client" ,"icon":"feather icon-circle","slug":"Ajouter Client"},
+      {"url":"/admin/customer","name":"Liste Des Clients", "i18n":"Liste Des Clients" ,"icon":"feather icon-circle","slug":"Liste Des Clients"}
+    ]
+  },
+  {"url":"#", "name":"Livreurs", "i18n":"Livreurs" , "icon":"feather icon-users", "slug":"Livreurs",
+    "submenu":[
+      {"url":"/admin/deliverymen/create","name":"Ajouter Livreur", "i18n":"Ajouter Livreur" ,"icon":"feather icon-circle","slug":"Ajouter Livreurs"},
+      {"url":"/admin/deliverymen","name":"Liste Des Livreurs", "i18n":"Liste Des Livreurs" ,"icon":"feather icon-circle","slug":"Liste Des Livreurs"}
+    ]
+  },
+  {"url":"","navheader":"Gestion des Stocks","icon":""},
+  {"url":"#", "name":"Stocks", "i18n":"Stocks" , "icon":"feather icon-home", "slug":"Stocks",
+    "submenu":[
+      {"url":"/admin/warehouse/create","name":"Ajouter Stock", "i18n":"Ajouter Stock" ,"icon":"feather icon-circle","slug":"Ajouter Stock"},
+      {"url":"/admin/warehouse","name":"Liste Des Stocks", "i18n":"Liste Des Stocks" ,"icon":"feather icon-circle","slug":"Liste Des Stocks"}
+    ]
+  },
+  {"url":"#", "name":"Produits", "i18n":"Produits" , "icon":"feather icon-users", "slug":"Produits",
+    "submenu":[
+      {"url":"/admin/product/create","name":"Ajouter Produit", "i18n":"Ajouter Produit" ,"icon":"feather icon-circle","slug":"Ajouter Produit"},
+      {"url":"/admin/product","name":"Liste Des Produits", "i18n":"Liste Des Produits" ,"icon":"feather icon-circle","slug":"Liste Des Produits"}
+    ]
+  },
+  {"url":"#", "name":"Les Bons", "i18n":"Les Bons" , "icon":"feather icon-users", "slug":"Les Bons",
+    "submenu":[
+      {"url":"/admin/purchase","name":"Bon de commande", "i18n":"Bon de commande" ,"icon":"feather icon-circle","slug":"Bon de commande"},
+      {"url":"/admin/deliveryform","name":"Bon de livraison", "i18n":"Bon de livraison" ,"icon":"feather icon-circle","slug":"Bon de livraison"}
+    ]
+  },
+  {"url":"","navheader":"livraison des commandes","icon":""},
+  {"url":"#","name":"livraison","slug":"starter kit","icon":"feather icon-map-pin", "i18n":"Delivery ", "dropdown":"",
+    "submenu":[
+      {"url":"/admin/delivery/", "name":"les Commandes","icon":"feather icon-circle ", "i18n":"nav.commandes"},
+      {"url":"/admin/delivery/", "name":"En attente","icon":"feather icon-circle  ", "i18n":"nav.Enattente "},
+      {"url":"/admin/delivery/", "name":"Confirm","icon":"feather icon-circle danger  ", "i18n":"nav.Confirm"},
+      {"url":"/admin/delivery/", "name":"En cours de livraison","icon":"feather icon-circle  ", "i18n":"nav.Encoursdelivraison"},
+      {"url":"/admin/delivery/", "name":"pas Reponse","icon":"feather icon-circle ", "i18n":"nav.pasReponse"},
+      {"url":"/admin/delivery/", "name":"Revenir","icon":"feather icon-circle ", "i18n":"nav.Revenir"},
+      {"url":"/admin/delivery/", "name":"Remboursé","icon":"feather icon-circle ", "i18n":"nav.Remboursé"},
+      {"url":"/admin/delivery/", "name":"Annulé","icon":"feather icon-circle  ", "i18n":"nav.Annulé"},
+      {"url":"/admin/delivery/", "name":"Livré","icon":"feather icon-circle ", "i18n":"nav.Livré"}
+    ]
+  },
+  {"url":"","navheader":"Gestion des villes","icon":""},
+  {"url":"/admin/city", "name":"Villes","icon":"feather icon-map", "i18n":"nav.Villes"},
+  {"url":"","navheader":"réglages","icon":""},
+  {"url":"/city", "name":"réglages system","icon":"feather icon-settings", "i18n":"nav.system"},
+  {"url":"https://pixinvent.ticksy.com/", "name":"Raise Support", "icon":"feather icon-life-buoy", "i18n":"nav.raise_support"}
+
+]}
