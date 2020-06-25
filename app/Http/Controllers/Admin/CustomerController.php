@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
@@ -40,12 +41,44 @@ class CustomerController extends Controller
   public function store(CustomerRequest $request)
   {
     try {
-      Customer::create([$request->except('_token')]);
-      return Redirect() -> route('admin.customer') -> with(['success'=>'success']);
+      $file="";
+      if ($request->has('avatar')) {
+        $file = $this->SaveImage('profile/user-uploads', $request->avatar);
+      }
+      $statut="Active";
+      if (!$request->has('statut')) {
+        $statut = 'Desactive';
+      }
+      Customer::create([
+        'fname' => $request -> input('fname'),
+        'lname' => $request -> input('lname'),
+        'phone' => $request -> input('phone'),
+        'address' => $request -> input('address'),
+        'city' => $request -> input('city'),
+        'email' => $request -> input('email'),
+        'bank' => $request -> input('bank'),
+        'rib' => $request -> input('rib'),
+        'discount' => $request -> input('discount'),
+        'avatar' => $file,
+        'statut' => $statut,
+        'password' => Hash::make($request -> input('password'))
+      ]);
+      return Redirect() -> route('customer.index') -> with(['success'=>'success']);
     }catch (\Exception $ex){
-      return redirect() -> route('admin.customer') -> with(['error'=>'error']);
+      return redirect() -> route('customer.index') -> with(['error'=>'error']);
     }
   }
+
+  public function SaveImage($folder, $photo)
+  {
+    $file_extension = $photo->getClientOriginalExtension();
+
+    $file_name = $photo->hashName() . '.' . $file_extension;
+    $path ="images/" . $folder;
+    $photo->move($path, $file_name);
+    return $path . "/" . $file_name;
+  }
+
 
   /**
    * Show the form for editing the specified resource.
@@ -55,9 +88,15 @@ class CustomerController extends Controller
    */
   public function edit($id)
   {
-    $customer = Customer::find($id);
-    if (!$customer)return Redirect() -> route('admin.customer') -> with(['error'=>'error']);
-    else return view('admin.customer.edit',compact('customer'));
+    try {
+      $customer = Customer::findOrfail($id)->makeVisible(['bank','rib','id']);
+      if (!$customer)return Redirect() -> route('customer.index') -> with(['error'=>'error']);
+      else return view('admin.customer.edit',compact('customer'));
+    }catch (\Exception $ex)
+    {
+      return Redirect() -> route('customer.index') -> with(['error'=>'error']);
+    }
+
   }
 
   /**
@@ -70,14 +109,35 @@ class CustomerController extends Controller
   public function update(CustomerRequest $request, $id)
   {
     try {
-      $customer = Customer::find($id);
-      if (!$customer) return Redirect() -> route('admin.customer') -> with(['error'=>'error']);
+      $customer = Customer::findorfail($id);
+      if (!$customer) return Redirect() -> route('customer.index') -> with(['error'=>'error']);
       else {
-        $customer -> update($request -> except('_token'));
-        return redirect() -> route('admin.customer') -> with(['success'=>'success']);
+        $file=$customer->avatar;
+        if ($request->has('avatar')) {
+          $file = $this->SaveImage('profile/user-uploads', $request->avatar);
+        }
+        $statut=$customer->statut;
+        if (!$request->input('statut')) {
+          $statut = 'Desactive';
+        }
+        $customer -> update([
+          'fname' => $request -> input('fname'),
+          'lname' => $request -> input('lname'),
+          'phone' => $request -> input('phone'),
+          'address' => $request -> input('address'),
+          'city' => $request -> input('city'),
+          'email' => $request -> input('email'),
+          'bank' => $request -> input('bank'),
+          'rib' => $request -> input('rib'),
+          'discount' => $request -> input('discount'),
+          'avatar' => $file,
+          'statut' => $statut,
+          'password' => Hash::make($request -> input('password'))
+        ]);
+        return redirect() -> route('customer.index') -> with(['success'=>'success']);
       }
     }catch (\Exception $ex){
-      return redirect() -> route('admin.customer') -> with(['error'=>'error']);
+      return redirect() -> route('customer.index') -> with(['error'=>'error']);
     }
   }
 
@@ -90,15 +150,15 @@ class CustomerController extends Controller
   public function destroy($id)
   {
     try {
-      $customer =  Customer::find($id);
-      if (!$customer) return Redirect() -> route('admin.customer') -> with(['error'=>'error']);
+      $customer =  Customer::findorfail($id);
+      if (!$customer) return Redirect() -> route('customer.index') -> with(['error'=>'error']);
       else {
         $customer -> delete();
-        return  redirect()->route('admin.customer') -> with(['success'=>'success']);
+        return  redirect()->route('customer.index') -> with(['success'=>'success']);
       }
 
     }catch (\Exception $ex){
-      return redirect() -> route('admin.customer') -> with(['error'=>'error']);
+      return redirect() -> route('customer.index') -> with(['error'=>'error']);
     }
 
   }

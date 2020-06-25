@@ -12,18 +12,7 @@
 @section('content')
   {{-- Section Start --}}
   <section class="simple-validation">
-    @if(Session::has('errors'))
-      <div class="alert alert-danger alert-dismissible showfade " role="alert">
-        <ul >
-          @foreach ($errors->all() as $message)
-            <li>{{$message}}</li>
-          @endforeach
-        </ul>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true"><i class="feather icon-x-circle"></i></span>
-        </button>
-      </div>
-    @endif
+  @include('panels.alerts.errors')
     <div class="row">
       <div class="col-md-12">
         <div class="card">
@@ -34,7 +23,7 @@
               <div class="card-header">
                 <div class="media">
                   <a href="javascript: void(0);">
-                    <img src="{{ asset('images/portrait/small/avatar-s-12.jpg') }}" class="rounded mr-75"
+                    <img src="{{ asset($admin->avatar) }}" class="rounded mr-75"
                          alt="profile image" height="64" width="64">
                     <input type="hidden" name="id" id="id" value="{{$admin->id}}">
                   </a>

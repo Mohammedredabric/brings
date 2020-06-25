@@ -14,6 +14,8 @@
   {{-- Section Start --}}
   <!-- Zero configuration table -->
   <section id="basic-datatable">
+    @include('panels.alerts.errors')
+    @include('panels.alerts.success')
     <div class="row">
       <div class="col-12">
         <div class="card">
@@ -48,7 +50,11 @@
                           <div class="d-flex ">
                             <a href="{{route('customer.show',$customer->id)}}"  class="btn btn-icon btn-icon  btn-flat-warning mr-1 mb-1 waves-effect waves-light"><i class="feather icon-eye warning"></i></a>
                             <a href="{{route('customer.edit',$customer->id)}}"  class="btn btn-icon btn-icon  btn-flat-primary mr-1 mb-1 waves-effect waves-light"><i class="feather icon-edit primary"></i></a>
-                            <a href="{{route('customer.destroy',$customer->id)}}"  class="btn btn-icon btn-icon  btn-flat-danger mr-1 mb-1 waves-effect waves-light"><i class="feather icon-trash-2 danger"></i></a>
+                            <form method="post" action="{{route('customer.destroy',$customer->id)}}">
+                              @csrf
+                              @method("Delete")
+                              <button class="btn btn-icon btn-icon  btn-flat-danger mr-1 mb-1 waves-effect waves-light"><i class="feather icon-trash-2 danger"></i></button>
+                            </form>
                           </div>
                         </td>
                       </tr>
