@@ -122,4 +122,14 @@ class Helper
             }
         }
     }
+
+  public function SaveImage($folder, $photo)
+  {
+    $file_extension = $photo->getClientOriginalExtension();
+
+    $file_name = $photo->hashName() . '.' . $file_extension;
+    $path = public_path()."/images/" . $folder;
+    $photo->move($path, $file_name);
+    return $path . "/" . $file_name;
+  }
 }

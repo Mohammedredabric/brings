@@ -12,6 +12,8 @@ class Admin extends Authenticatable
 
   //
 
+    protected $table='admins';
+
     protected $guard = 'admin';
 
   /**
@@ -20,7 +22,22 @@ class Admin extends Authenticatable
    * @var array
    */
 
-  protected $fillable = [  'fname', 'lname', 'address', 'city','phone', 'email','password','bank','rib','avatar','statut', 'updated_at', 'created_at'];
+  protected $fillable = [
+    'fname',
+    'lname',
+    'address',
+    'latitude',
+    'longitide',
+    'city',
+    'phone',
+    'email',
+    'password',
+    'bank',
+    'rib',
+    'avatar',
+    'statut',
+    'updated_at',
+    'created_at'];
 
   /**
    * The attributes that should be hidden for arrays.
@@ -29,6 +46,14 @@ class Admin extends Authenticatable
    */
   protected $hidden = [
     'password', 'remember_token',
+    'email_verified_at',
+    'created_at',
+    'updated_at',
+    'latitude',
+    'longitide',
+    'bank',
+    'rib',
+    'Link'
   ];
 
   /**
@@ -39,4 +64,18 @@ class Admin extends Authenticatable
   protected $casts = [
     'email_verified_at' => 'datetime',
   ];
+
+
+  //
+
+  public function scopeSelection($query){
+    return $query->select('fname', 'lname','avatar','statut','city');
+  }
+
+
+
+
+
+
+
 }

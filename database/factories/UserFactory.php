@@ -25,3 +25,42 @@ $factory->define(User::class, function (Faker $faker) {
         'remember_token' => Str::random(10),
     ];
 });
+$factory->define(\App\Models\Admin::class, function (Faker $faker) {
+  return [
+    'fname' => $faker->firstName,
+    'lname' => $faker->lastName,
+    'address' => $faker->lastName,
+    'city' => $faker->city,
+    'phone' => '0620810005',
+    'email' => $faker->unique()->safeEmail,
+    'email_verified_at' => now(),
+    'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+    'remember_token' => Str::random(10),
+  ];
+});
+$factory->define(\App\Models\Customer::class, function (Faker $faker) {
+  return [
+    'fname' => $faker->firstName,
+    'lname' => $faker->lastName,
+    'address' => $faker->lastName,
+    'city' => $faker->city,
+    'phone' => '0620810005',
+    'email' => $faker->unique()->safeEmail,
+    'email_verified_at' => now(),
+    'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+    'remember_token' => Str::random(10),
+  ];
+});
+$factory->define(\App\Models\DeliveryMen::class, function (Faker $faker) {
+  return [
+    'fname' => $faker->firstName,
+    'lname' => $faker->lastName,
+    'address' => $faker->lastName,
+    'city' => $faker->city,
+    'phone' => '0620810005',
+    'email' => $faker->unique()->safeEmail,
+    'email_verified_at' => now(),
+    'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+    'remember_token' => Str::random(10),
+  ];
+});

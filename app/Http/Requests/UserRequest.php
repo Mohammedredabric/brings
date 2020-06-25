@@ -26,11 +26,12 @@ class UserRequest extends FormRequest
         return [
           'fname' => 'required|string|max:255',
           'lname' => 'required|string|max:255',
-          'phone' => 'required|string|max:255',
+          'avatar' => 'required_without:id|mimes:jpg,jpeg,png',
           'address' => 'required|string|max:255',
           'city' => 'required|string|max:255',
-          'email' => 'required|email|max:255|unique:admins',
-          'password' =>'required|string|min:8|confirmed|'
+          'email' => 'required|email|max:255|unique:admins,id',
+          'password' =>'required_without:id'
         ];
     }
+
 }

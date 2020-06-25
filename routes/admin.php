@@ -21,9 +21,24 @@ Route::post('register', 'Auth\RegisterController@createAdmin');
 
 // Route url
 Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin'], function () {
-        //### start dashboard   ###//
+
+  //### start dashboard   ###//
   Route::get('/', 'DashboardController@index')->name('admin.dashboard');
-        //### end dashboard   ###//
+  //### end dashboard   ###//
+
+  //### start User Or admin route   ###//
+  Route::resource('user', 'UserController');
+  //### start User Or admin route   ###//
+
+  //### start Customer route   ###//
+  Route::resource('customer', 'CustomerController');
+  //### start Customer route   ###//
+
+  //### start Customer route   ###//
+  Route::resource('deliverymen', 'DeliveryMenController');
+  //### start Customer route   ###//
+
+
 
 
 });

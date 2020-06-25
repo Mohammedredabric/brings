@@ -16,8 +16,9 @@ class CustomerController extends Controller
    */
   public function index()
   {
-    $customer=Customer::all();
-    return view('admin.customer.index',['customers'=>$customer]);
+    $customeres=Customer::select('id','fname', 'lname','avatar','statut','city','email')->get();
+
+    return view('admin.customer.index',compact('customeres'));
   }
 
   /**

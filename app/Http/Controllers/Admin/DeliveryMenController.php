@@ -16,8 +16,8 @@ class DeliveryMenController extends Controller
    */
   public function index()
   {
-    $deliverymen=DeliveryMen::all();
-    return view('admin.deliverymen.index',['deliverymens'=>$deliverymen]);
+    $deliverymens=DeliveryMen::select('id','fname', 'lname','avatar','statut','city','email')->get();
+    return view('admin.deliverymen.index',compact('deliverymens'));
   }
 
   /**

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use App\Models\Admin;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
@@ -17,8 +18,8 @@ class UserController extends Controller
      */
     public function index()
     {
-       $admins=Admin::all();
-       return view('admin.user.index',['admins'=>$admins]);
+       $admins=Admin::select('id','fname', 'lname','avatar','statut','city','email')->get();
+       return view('admin.user.index',compact('admins'));
     }
 
     /**
@@ -40,11 +41,45 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
       try {
-        Admin::create([$request->except('_token')]);
-        return Redirect() -> route('admin.admin') -> with(['success'=>'success']);
+        $file="";
+        if ($request->has('avatar')) {
+          $file = $this->SaveImage('profile/user-uploads', $request->avatar);
+        }
+        $statut="Active";
+        if (!$request->has('statut')) {
+          $statut = 'Desactive';
+        }
+        Admin::create([
+          'fname' => $request -> input('fname'),
+          'lname' => $request -> input('lname'),
+          'phone' => $request -> input('phone'),
+          'address' => $request -> input('address'),
+          'city' => $request -> input('city'),
+          'email' => $request -> input('email'),
+          'bank' => $request -> input('bank'),
+          'rib' => $request -> input('rib'),
+          'avatar' => $file,
+          'statut' => $statut,
+          'password' => Hash::make($request -> input('password'))
+        ]);
+        return Redirect() -> route('user.index') -> with(['success'=>'success']);
       }catch (\Exception $ex){
-        return redirect() -> route('admin.admin') -> with(['error'=>'error']);
+        return redirect() -> route('user.index') -> with(['error'=>'error']);
       }
+    }
+
+    public function show($id){
+      return redirect() -> route('user.index') -> with(['error'=>'error']);
+
+    }
+    public function SaveImage($folder, $photo)
+    {
+      $file_extension = $photo->getClientOriginalExtension();
+
+      $file_name = $photo->hashName() . '.' . $file_extension;
+      $path ="/images/" . $folder;
+      $photo->move($path, $file_name);
+      return $path . "/" . $file_name;
     }
 
     /**
@@ -55,9 +90,13 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $admin=Admin::find($id);
-        if (!$admin)return Redirect() -> route('admin.admin') -> with(['error'=>'error']);
+      try {
+        $admin=Admin::findOrfail($id)->makeVisible(['bank','rib','id']);
+        if (!$admin)return Redirect() -> route('user.index') -> with(['error'=>'error']);
         else return view('admin.user.edit',compact('admin'));
+      }catch (\Exception $ex){
+        return redirect() -> route('user.index') -> with(['error'=>'error']);
+      }
     }
 
     /**
@@ -70,14 +109,35 @@ class UserController extends Controller
     public function update(UserRequest $request, $id)
     {
       try {
-        $admin = Admin::find($id);
-        if (!$admin) return Redirect() -> route('admin.admin') -> with(['error'=>'error']);
+        $admin = Admin::findOrfail($id);
+        if (!$admin) return Redirect() -> route('user.index') -> with(['error'=>'error']);
         else {
-          $admin -> update($request -> except('_token'));
-          return redirect() -> route('admin.admin') -> with(['success'=>'success']);
+          $file=$admin->avatar;
+          if ($request->has('avatar')) {
+            $file = $this->SaveImage('profile/user-uploads', $request->avatar);
+          }
+          $statut=$admin->statut;
+          if (!$request->input('statut')) {
+            $statut = 'Desactive';
+          }
+
+          $admin->update([
+            'fname' => $request -> input('fname'),
+            'lname' => $request -> input('lname'),
+            'phone' => $request -> input('phone'),
+            'address' => $request -> input('address'),
+            'city' => $request -> input('city'),
+            'email' => $request -> input('email'),
+            'bank' => $request -> input('bank'),
+            'rib' => $request -> input('rib'),
+            'avatar' => $file,
+            'statut' => $statut,
+            'password' => Hash::make($request -> input('password'))
+          ]);
+          return redirect() -> route('user.index') -> with(['success'=>'success']);
         }
       }catch (\Exception $ex){
-        return redirect() -> route('admin.admin') -> with(['error'=>'error']);
+        return redirect() -> route('user.index') -> with(['error'=>'error']);
       }
     }
 
@@ -90,15 +150,15 @@ class UserController extends Controller
     public function destroy($id)
     {
       try {
-        $admin = Admin::find($id);
-        if (!$admin) return Redirect() -> route('admin.admin') -> with(['error'=>'error']);
+        $admin = Admin::findOrfail($id);
+        if (!$admin) return Redirect() -> route('user.index') -> with(['error'=>'error']);
         else {
           $admin -> delete();
-          return  redirect()->route('admin.admin') -> with(['success'=>'success']);
+          return  redirect()->route('user.index') -> with(['success'=>'success']);
         }
 
       }catch (\Exception $ex){
-        return redirect() -> route('admin.admin') -> with(['error'=>'error']);
+        return redirect() -> route('user.index') -> with(['error'=>'error']);
       }
 
     }

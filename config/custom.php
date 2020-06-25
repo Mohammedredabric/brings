@@ -12,7 +12,7 @@ return [
         'bodyClass' => '',              // add custom class
         'pageHeader' => true,           // options[Boolean]: true(default), false (Page Header for Breadcrumbs)
         'contentLayout' => '',          // options[String]: "" (default), content-left-sidebar, content-right-sidebar, content-detached-left-sidebar, content-detached-right-sidebar
-        'blankPage' => true,            // options[Boolean]: true, false(default)
+        'blankPage' => false,            // options[Boolean]: true, false(default)
         'mainLayoutType' => 'vertical',          // Options[String]: horizontal, vertical(default)
         'direction' => env('MIX_CONTENT_DIRECTION', 'ltr') // Options[String]: ltr(default), rtl
     ],
