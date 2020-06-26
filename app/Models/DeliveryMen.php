@@ -40,4 +40,9 @@ class DeliveryMen extends Authenticatable
   protected $casts = [
     'email_verified_at' => 'datetime',
   ];
+
+  public function scopeSelection($query){
+   return $query->select('id','fname', 'lname','avatar','statut','city','email');
+  }
+
 }

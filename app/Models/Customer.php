@@ -52,4 +52,8 @@ class Customer extends Authenticatable
     return $this -> hasMany(details::class);
   }
 
+  public function scopeSelection($query){
+    return $query->select('id','fname', 'lname','avatar','statut','city','email');
+  }
+
 }

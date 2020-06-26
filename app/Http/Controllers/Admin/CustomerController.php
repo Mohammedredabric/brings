@@ -17,7 +17,7 @@ class CustomerController extends Controller
    */
   public function index()
   {
-    $customeres=Customer::select('id','fname', 'lname','avatar','statut','city','email')->get();
+    $customeres=Customer::selection()->get();
 
     return view('admin.customer.index',compact('customeres'));
   }
@@ -43,7 +43,7 @@ class CustomerController extends Controller
     try {
       $file="";
       if ($request->has('avatar')) {
-        $file = $this->SaveImage('profile/user-uploads', $request->avatar);
+        $file = $this->SaveImage('profile/customer-uploads', $request->avatar);
       }
       $statut="Active";
       if (!$request->has('statut')) {
@@ -72,7 +72,6 @@ class CustomerController extends Controller
   public function SaveImage($folder, $photo)
   {
     $file_extension = $photo->getClientOriginalExtension();
-
     $file_name = $photo->hashName() . '.' . $file_extension;
     $path ="images/" . $folder;
     $photo->move($path, $file_name);
@@ -114,7 +113,7 @@ class CustomerController extends Controller
       else {
         $file=$customer->avatar;
         if ($request->has('avatar')) {
-          $file = $this->SaveImage('profile/user-uploads', $request->avatar);
+          $file = $this->SaveImage('profile/customer-uploads', $request->avatar);
         }
         $statut=$customer->statut;
         if (!$request->input('statut')) {

@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-       $admins=Admin::select('id','fname', 'lname','avatar','statut','city','email')->get();
+       $admins=Admin::selection()->get();
        return view('admin.user.index',compact('admins'));
     }
 

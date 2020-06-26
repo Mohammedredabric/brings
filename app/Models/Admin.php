@@ -69,7 +69,7 @@ class Admin extends Authenticatable
   //
 
   public function scopeSelection($query){
-    return $query->select('fname', 'lname','avatar','statut','city');
+    return $query->select('id','fname', 'lname','avatar','statut','city','email');
   }
 
 

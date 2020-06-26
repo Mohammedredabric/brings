@@ -39,6 +39,10 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin'], function ()
   //### start Customer route   ###//
 
 
+  //### start Customer route   ###//
+  Route::resource('warehouse', 'WarehouseController');
+  //### start Customer route   ###//
+
 
 
 });

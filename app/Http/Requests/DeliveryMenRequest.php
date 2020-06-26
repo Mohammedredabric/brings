@@ -27,10 +27,16 @@ class DeliveryMenRequest extends FormRequest
           'fname' => 'required|string|max:255',
           'lname' => 'required|string|max:255',
           'phone' => 'required|string|max:255',
+          'avatar' => 'required_without:id|mimes:jpg,jpeg,png',
           'address' => 'required|string|max:255',
           'city' => 'required|string|max:255',
-          'email' => 'required|email|max:255|unique:delivery_mens',
-          'password' =>'required|string|min:8|confirmed|'
+          'bank' => 'required|string|max:150',
+          'rib' =>'required|string|max:30',
+          'email' => 'required|email|max:255|unique:delivery_mens,id',
+          'password' =>'required_without:id',
+          "price_delivery"=> 'required',
+          "price_refund" => 'required',
+          "price_cancel" => 'required',
         ];
     }
 }

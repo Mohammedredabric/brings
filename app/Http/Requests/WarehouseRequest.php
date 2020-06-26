@@ -26,7 +26,7 @@ class WarehouseRequest extends FormRequest
         return [
           'name' => 'required|string|max:255',
           'address' => 'required|string|max:255',
-          'phone' => 'required|numeric|max:11',
+          'phone' => 'required|string|max:11',
           'city_id' => 'required|numeric',
           'price_warehousing' => 'numeric',
           'price_packing_basic' => 'numeric',
