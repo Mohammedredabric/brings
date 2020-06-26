@@ -38,10 +38,13 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin'], function ()
   Route::resource('deliverymen', 'DeliveryMenController');
   //### start Customer route   ###//
 
-
-  //### start Customer route   ###//
+  //### start Warehouse route   ###//
   Route::resource('warehouse', 'WarehouseController');
-  //### start Customer route   ###//
+  //### start Warehouse route   ###//
+
+  //### start product route   ###//
+  Route::resource('product', 'ProductController');
+  //### start product route   ###//
 
 
 

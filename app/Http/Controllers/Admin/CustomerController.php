@@ -15,6 +15,7 @@ class CustomerController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
+
   public function index()
   {
     $customeres=Customer::selection()->get();
@@ -27,6 +28,7 @@ class CustomerController extends Controller
    *
    * @return \Illuminate\Http\Response
    */
+
   public function create()
   {
     return view('admin.customer.create');
@@ -38,6 +40,7 @@ class CustomerController extends Controller
    * @param  \Illuminate\Http\Request  $request
    * @return \Illuminate\Http\Response
    */
+
   public function store(CustomerRequest $request)
   {
     try {
@@ -78,13 +81,13 @@ class CustomerController extends Controller
     return $path . "/" . $file_name;
   }
 
-
   /**
    * Show the form for editing the specified resource.
    *
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
+
   public function edit($id)
   {
     try {
@@ -105,6 +108,7 @@ class CustomerController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
+
   public function update(CustomerRequest $request, $id)
   {
     try {
@@ -146,6 +150,7 @@ class CustomerController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
+
   public function destroy($id)
   {
     try {

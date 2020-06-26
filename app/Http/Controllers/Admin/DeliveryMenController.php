@@ -85,6 +85,7 @@ class DeliveryMenController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
+
   public function edit($id)
   {
     try {
@@ -104,6 +105,7 @@ class DeliveryMenController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
+
   public function update(DeliveryMenRequest $request, $id)
   {
     try {
@@ -147,6 +149,7 @@ class DeliveryMenController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
+
   public function destroy($id)
   {
     try {

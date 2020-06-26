@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
+use App\Models\Customer;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -16,8 +17,8 @@ class ProductController extends Controller
    */
   public function index()
   {
-    $products=Product::all();
-    return view('admin.product.index',['products'=>$products]);
+    $products=Product::Selection() -> get() ;
+    return view('admin.product.index',compact('products'));
   }
 
   /**
@@ -27,7 +28,8 @@ class ProductController extends Controller
    */
   public function create()
   {
-    return view('admin.product.create');
+    $customers = Customer::Customers() -> get();
+    return view('admin.product.create',compact('customers'));
   }
 
   /**
@@ -39,12 +41,35 @@ class ProductController extends Controller
   public function store(ProductRequest $request)
   {
     try {
-      Product::create([$request->except('_token')]);
-      return Redirect() -> route('admin.product') -> with(['success'=>'success']);
+      $file="";
+      if ($request->has('image')) {
+        $file = $this->SaveImage('products', $request->image);
+      }
+      Product::create([
+        'ref' => $request->input('ref'),
+        'name' => $request->input('name'),
+        'price' =>$request->input('price'),
+        // 'paking_type' => $request->input('paking_type'),
+        'image' => $file,
+        'customer_id' => $request->input('customer'),
+        'description' => $request->input('description'),
+      ]);
+      return Redirect() -> route('product.index') -> with(['success'=>'success']);
     }catch (\Exception $ex){
-      return redirect() -> route('admin.product') -> with(['error'=>'error']);
+      return Redirect() -> route('product.index') -> with(['error'=>'error']);
     }
   }
+
+  public function SaveImage($folder, $photo)
+  {
+    $file_extension = $photo->getClientOriginalExtension();
+    $file_name = $photo->hashName() . '.' . $file_extension;
+    $path ="images/" . $folder;
+    $photo->move($path, $file_name);
+    return $path . "/" . $file_name;
+  }
+
+
 
   /**
    * Show the form for editing the specified resource.
@@ -55,8 +80,10 @@ class ProductController extends Controller
   public function edit($id)
   {
     $product = Product::find($id);
-    if (!$product)return Redirect() -> route('admin.product') -> with(['error'=>'error']);
-    else return view('admin.product.edit',compact('product'));
+    $customers = Customer::Customers() -> get();
+
+    if (!$product)return Redirect() -> route('product.index') -> with(['error'=>'error']);
+    else return view('admin.product.edit',compact('product','customers'));
   }
 
   /**
@@ -69,14 +96,27 @@ class ProductController extends Controller
   public function update(ProductRequest $request, $id)
   {
     try {
-      $product = Product::find($id);
-      if (!$product) return Redirect() -> route('admin.product') -> with(['error'=>'error']);
+      $product = Product::findOrfail($id);
+      if (!$product) return Redirect() -> route('product.index') -> with(['error'=>'error']);
       else {
-        $product -> update($request -> except('_token'));
-        return redirect() -> route('admin.product') -> with(['success'=>'success']);
+        $file=$product -> image;
+        if ($request->has('image')) {
+          $file = $this->SaveImage('products', $request->image);
+        }
+        $product -> update([
+          'ref' => $request->input('ref'),
+          'name' => $request->input('name'),
+          'price' =>$request->input('price'),
+          // 'paking_type' => $request->input('paking_type'),
+          'image' => $file,
+          'customer_id' => $request->input('customer'),
+          'description' => $request->input('description'),
+        ]);
+
+        return redirect() -> route('product.index') -> with(['success'=>'success']);
       }
     }catch (\Exception $ex){
-      return redirect() -> route('admin.product') -> with(['error'=>'error']);
+      return redirect() -> route('product.index') -> with(['error'=>'error']);
     }
   }
 
@@ -89,15 +129,15 @@ class ProductController extends Controller
   public function destroy($id)
   {
     try {
-      $product =  Product::find($id);
-      if (!$product) return Redirect() -> route('admin.product') -> with(['error'=>'error']);
+      $product =  Product::findORfail($id);
+      if (!$product) return Redirect() -> route('product.index') -> with(['error'=>'error']);
       else {
         $product -> delete();
-        return  redirect()->route('admin.product') -> with(['success'=>'success']);
+        return  redirect()->route('product.index') -> with(['success'=>'success']);
       }
 
     }catch (\Exception $ex){
-      return redirect() -> route('admin.product') -> with(['error'=>'error']);
+      return redirect() -> route('product.index') -> with(['error'=>'error']);
     }
 
   }

@@ -21,14 +21,17 @@ class ProductRequest extends FormRequest
      *
      * @return array
      */
+
+
     public function rules()
     {
         return [
-          'ref' => 'required|string|max:255',
+          'ref' => 'required|string|max:255|unique:products,id',
           'name' => 'required|string|max:255',
-          'price' => 'required|numeric|max:255',
-          'paking_type' => 'required|string|max:255',
-          'image' => 'required|image',
+          'price' => 'required|numeric',
+         // 'paking_type' => 'required|string|max:255',
+          'image' => 'required_without:id|image',
+          'customer'=> 'required|numeric',
           'description' => 'required|string|max:255',
         ];
     }

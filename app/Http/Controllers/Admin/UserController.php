@@ -71,6 +71,7 @@ class UserController extends Controller
     public function show($id){
 
     }
+
     public function SaveImage($folder, $photo)
     {
       $file_extension = $photo->getClientOriginalExtension();
@@ -87,6 +88,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function edit($id)
     {
       try {

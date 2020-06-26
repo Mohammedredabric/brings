@@ -56,4 +56,8 @@ class Customer extends Authenticatable
     return $query->select('id','fname', 'lname','avatar','statut','city','email');
   }
 
+  public function scopeCustomers($query){
+    return $query -> select('id','fname', 'lname');
+  }
+
 }

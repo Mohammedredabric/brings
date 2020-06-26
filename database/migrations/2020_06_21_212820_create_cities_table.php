@@ -16,6 +16,7 @@ class CreateCitiesTable extends Migration
         Schema::create('cities', function (Blueprint $table) {
           $table->bigIncrements('id');
           $table->string('price_delivery',25);
+          $table->string('city',100);
           $table->string('price_refund',25);
           $table->string('price_cancel',25);
           $table->string('Date_delivery',25);
